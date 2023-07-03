@@ -1,0 +1,10 @@
+
+git version
+git config --global user.name "WW"
+git config --global user.email "924544296@qq.com"
+git init
+git add .
+git commit
+vim:a或i进入编辑模式，esc后:wq退出
+git log
+git commit -m "2nd commit"
