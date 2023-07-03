@@ -8,3 +8,5 @@ git commit
 vim:a或i进入编辑模式，esc后:wq退出
 git log
 git commit -m "2nd commit"
+git remote -v
+git push
