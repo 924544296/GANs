@@ -16,4 +16,5 @@ conda activate P
 cd H:\BaiduSyncdisk\gitclone\GANs
 h:
 python implementation/gan.py
-python implementation/gan.py --path_image '/home/aistudio/data/celeba/img_align_celeba/' --path_result '/home/aistudio/work/'
+python implementation/gan.py --path_image '/home/aistudio/data/celeba/img_align_celeba/' --path_result '/home/aistudio/work/gan/'
+! python train/gan.py --generate_only True --path_result '/home/aistudio/work/gan/'

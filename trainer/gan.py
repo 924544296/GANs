@@ -10,18 +10,21 @@ class Trainer_GAN(Trainer):
     #
     def __init__(self, opt):
         super().__init__(opt)
-        self.net_d = Discriminator_GAN(opt.channel_d)
-        self.net_d.train()
         self.net_g = Generator_GAN(opt.dim_latent, opt.channel_g)
-        self.net_g.train()
-        if self.opt.load_model:
-            self.net_d.set_state_dict(P.load(self.opt.path_result + 'net_d.pdparams'))
+        if opt.generate_only:
             self.net_g.set_state_dict(P.load(self.opt.path_result + 'net_g.pdparams'))
-        self.optimizer_d = P.optimizer.Adam(parameters=self.net_d.parameters(), 
-                            learning_rate=opt.learning_rate, beta1=opt.beta1, beta2=opt.beta2)
-        self.optimizer_g = P.optimizer.Adam(parameters=self.net_g.parameters(), 
-                            learning_rate=2*opt.learning_rate, beta1=opt.beta1, beta2=opt.beta2)
-        self.dataset = Dataset_GAN(opt.path_image)
+        else: 
+            self.net_d = Discriminator_GAN(opt.channel_d)
+            if self.opt.load_model:
+                self.net_g.set_state_dict(P.load(self.opt.path_result + 'net_g.pdparams'))
+                self.net_d.set_state_dict(P.load(self.opt.path_result + 'net_d.pdparams'))
+            self.optimizer_g = P.optimizer.Adam(parameters=self.net_g.parameters(), 
+                                learning_rate=2*opt.learning_rate, beta1=opt.beta1, beta2=opt.beta2)
+            self.optimizer_d = P.optimizer.Adam(parameters=self.net_d.parameters(), 
+                                learning_rate=opt.learning_rate, beta1=opt.beta1, beta2=opt.beta2)
+            self.net_g.train()
+            self.net_d.train()
+            self.dataset = Dataset_GAN(opt.path_image)
     # 
     def trainer_d(self, image_real):
         #
