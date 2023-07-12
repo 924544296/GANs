@@ -1,5 +1,4 @@
 import paddle as P 
-import paddle.nn.functional as F 
 from paddle.io import DataLoader 
 
 

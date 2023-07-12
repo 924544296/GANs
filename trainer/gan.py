@@ -50,8 +50,9 @@ class Trainer_GAN(Trainer):
     def save_image(self, epoch, iteration): 
         self.net_g.eval() 
         image = self.net_g(P.randn([8, self.opt.dim_latent, 1, 1])) 
-        image = image.reshape([2,4,3,64,64]).transpose([0,3,1,4,2]).reshape([128,256,3]).numpy()
-        cv2.imwrite('%s Epoch %d, Iteration %d' % (self.opt.result, epoch, iteration), image)
+        image = image.reshape([2,4,3,64,64]).transpose([0,3,1,4,2]).reshape([128,256,3])
+        image = (image[:,:,::-1]*127.5+127.5).numpy().astype('uint8')
+        cv2.imwrite('%s Epoch %d__Iteration %d.png' % (self.opt.path_result+'image/', epoch, iteration), image)
         self.net_g.train() 
     #
     def train(self):

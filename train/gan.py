@@ -1,8 +1,6 @@
 import os 
 import sys 
 import argparse 
-import warnings 
-warnings.filterwarnings("ignore")
 
 cur_path = os.path.abspath(os.path.dirname(__file__))
 root_path = os.path.split(cur_path)[0]
@@ -26,10 +24,14 @@ parser.add_argument("--step_g", type=int, default=1, help="step of generator")
 parser.add_argument("--load_model", type=bool, default=False, help="step of generator")
 parser.add_argument("--sample_interval", type=int, default=1000, help="interval between image sampling")
 parser.add_argument("--path_result", type=str, default='.result/', help="path of result")
+parser.add_argument('--generate_only', action='store_true', default=False, help='generate images using the existed generator')
 
 
 if __name__ == '__main__':
     opt = parser.parse_args()
     print(opt)
     gan = Trainer_GAN(opt)
-    gan.train()
+    if opt.generate_only:
+        gan.save_image(0, 0)
+    else:
+        gan.train()
